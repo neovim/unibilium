@@ -183,7 +183,10 @@ unibi_term *unibi_from_term(const char *term) {
     }
 
     if ((env = getenv("TERMINFO"))) {
-        return from_dir(env, NULL, NULL, term);
+        ut = from_dir(env, NULL, NULL, term);
+        if (ut) {
+            return ut;
+        }
     }
 
     if ((env = getenv("HOME"))) {

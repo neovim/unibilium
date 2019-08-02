@@ -21,7 +21,8 @@ It looks in the following places:
 =item 1.
 
 If the environment variable C<TERMINFO> is set, it is interpreted as the name
-of the directory to search. No other directory is used.
+of the directory to search for local terminal definitions before checking in
+the standard place.
 
 =item 2.
 

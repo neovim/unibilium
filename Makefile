@@ -49,7 +49,7 @@ PROVE=prove
 PROVEFLAGS=`perl -we 'print $$ENV{MAKEFLAGS} =~ /-j *(\d+)?/ ? "-j" . ($$1 || 2) : ""'`
 
 ifeq ($(DEBUG),1)
-  CFLAGS_DEBUG=-ggdb -DDEBUG
+  CFLAGS_DEBUG=-ggdb -DDEBUG -Og
 endif
 
 OBJECTS=unibilium.lo uninames.lo uniutil.lo

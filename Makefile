@@ -125,8 +125,18 @@ man/%.3.gz: doc/%.pod
 	$(POD2MAN) $(POD2MAN_OPTS) $< | gzip > $@
 
 
+# Regenerate static test files, based on existing terminfo entries.
+# Typical usage (to not use files from ~/.terminfo etc):
+#   TERMINFO=/usr/share/terminfo make regenerate-tests
+STATIC_TEST_FILES:= \
+  t/static_screen-256color.c \
+  t/static_screen.c \
+  t/static_tmux.c \
+  t/static_xterm-256color.c
 .PHONY: regenerate-tests
-regenerate-tests: tools/gen-static-test
-	for t in screen-256color screen tmux xterm-256color xterm; do \
-	    $< $$t > t/static_$$t.c; \
-	done
+regenerate-tests:
+	$(RM) $(STATIC_TEST_FILES)
+	$(MAKE) $(STATIC_TEST_FILES)
+
+t/static_%.c: tools/gen-static-test
+	$< $(patsubst t/static_%.c,%,$@) > $@

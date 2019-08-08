@@ -26,7 +26,12 @@ along with unibilium.  If not, see <http://www.gnu.org/licenses/>.
 #include <string.h>
 #include <errno.h>
 #include <assert.h>
-#include <unistd.h>
+#ifdef _MSC_VER
+# include <BaseTsd.h>
+# define ssize_t SSIZE_T
+#else
+# include <unistd.h>
+#endif
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <fcntl.h>

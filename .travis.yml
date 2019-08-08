@@ -7,9 +7,20 @@ addons:
   apt:
     packages:
       - libtool-bin
-compiler:
-  - gcc
-  - clang
-script:
-  - make
-  - make test
+jobs:
+  include:
+    - name: gcc
+      compiler: gcc
+      script:
+        - make
+        - make test
+    - name: clang
+      compiler: clang
+      script:
+        - make
+        - make test
+    - name: gcc (cmake)
+      compiler: gcc
+      script:
+        - (mkdir build-cmake && cd build-cmake && cmake .. && make)
+        - make test LIBRARY=$PWD/build-cmake/libunibilium.a OBJECTS=

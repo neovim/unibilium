@@ -432,9 +432,6 @@ unibi_term *unibi_from_mem(const char *p, size_t n) {
                 if (exttablsz) {
                     memcpy(t->ext_alloc, p, exttablsz);
                     t->ext_alloc[exttablsz - 1] = '\0';
-
-                    p += exttablsz;
-                    n -= exttablsz;
                 }
             }
         }

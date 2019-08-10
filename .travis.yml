@@ -7,20 +7,23 @@ addons:
   apt:
     packages:
       - libtool-bin
+script:
+  - make
+  - make test
+  - sudo make install
 jobs:
   include:
     - name: gcc
       compiler: gcc
-      script:
-        - make
-        - make test
     - name: clang
       compiler: clang
-      script:
-        - make
-        - make test
     - name: gcc (cmake)
       compiler: gcc
       script:
         - (mkdir build-cmake && cd build-cmake && cmake .. && make)
         - make test LIBRARY=$PWD/build-cmake/libunibilium.a OBJECTS=
+        - (cd build-cmake && sudo make install)
+    - name: "macOS: clang"
+      os: osx
+      compiler: clang
+      osx_image: xcode10.2  # macOS 10.14

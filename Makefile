@@ -138,5 +138,5 @@ regenerate-tests:
 	$(RM) $(STATIC_TEST_FILES)
 	$(MAKE) $(STATIC_TEST_FILES)
 
-t/static_%.c: tools/gen-static-test
+t/static_%.c: | tools/gen-static-test
 	$< $(patsubst t/static_%.c,%,$@) > $@

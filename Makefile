@@ -15,14 +15,14 @@ CFLAGS_DEBUG=
 PACKAGE=unibilium
 
 PKG_MAJOR=2
-PKG_MINOR=0
+PKG_MINOR=1
 PKG_REVISION=0
 
 PKG_VERSION=$(PKG_MAJOR).$(PKG_MINOR).$(PKG_REVISION)
 
 # I am implementation $LT_REVISION of binary interface $LT_CURRENT, which is
 # a superset of all interfaces back to $LT_CURRENT - $LT_AGE.
-LT_REVISION=0
+LT_REVISION=1
 LT_CURRENT=4
 LT_AGE=0
 

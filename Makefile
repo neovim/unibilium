@@ -74,10 +74,10 @@ uniutil.lo: uniutil.c unibilium.h
 $(LIBRARY): $(OBJECTS)
 	$(LIBTOOL) --mode=link --tag=CC $(CC) $(LDFLAGS) -rpath '$(LIBDIR)' -version-info $(LT_CURRENT):$(LT_REVISION):$(LT_AGE) -o $@ $^
 
-tools/%: $(LIBRARY) tools/%.lo
+tools/%: $(LIBRARY) $(OBJECTS) tools/%.lo
 	$(LIBTOOL) --mode=link --tag=CC $(CC) $(LDFLAGS) -o $@ $^
 
-%.t: $(LIBRARY) %.lo
+%.t: $(LIBRARY) $(OBJECTS) %.lo
 	$(LIBTOOL) --mode=link --tag=CC $(CC) $(LDFLAGS) -o $@ $^
 
 .PHONY: build-tools

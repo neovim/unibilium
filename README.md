@@ -77,7 +77,7 @@ Run
     make test
 
 to run the included test suite. If that fails, please report it at
-https://github.com/mauke/unibilium/issues.
+https://github.com/neovim/unibilium/issues.
 
 Installing
 ----------

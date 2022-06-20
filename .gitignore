@@ -8,3 +8,17 @@ tools/*
 .*.swp
 /.maint
 /tags
+
+# autoreconf
+aclocal.m4
+autom4te.cache/
+config.guess
+config.sub
+configure
+ltmain.sh
+
+# configure
+Makefile
+config.log
+config.status
+libtool

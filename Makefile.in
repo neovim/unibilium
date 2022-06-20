@@ -2,21 +2,19 @@ ifneq ($(wildcard .maint),)
   include maint.mk
 endif
 
-ifeq ($(shell uname),Darwin)
-  LIBTOOL?=glibtool
-else
-  LIBTOOL?=libtool
-endif
+CC=@CC@
+LIBTOOL=@LIBTOOL@
 
-CFLAGS?=-O2
+CFLAGS=@CFLAGS@
+LDFLAGS=@LDFLAGS@
 
 CFLAGS_DEBUG=
 
-PACKAGE=unibilium
+PACKAGE=@PACKAGE_NAME@
 
-PKG_MAJOR=2
-PKG_MINOR=1
-PKG_REVISION=1
+PKG_MAJOR=@MAJOR@
+PKG_MINOR=@MINOR@
+PKG_REVISION=@PATCH@
 
 PKG_VERSION=$(PKG_MAJOR).$(PKG_MINOR).$(PKG_REVISION)
 
@@ -26,10 +24,15 @@ LT_REVISION=1
 LT_CURRENT=4
 LT_AGE=0
 
-PREFIX=/usr/local
-LIBDIR=$(PREFIX)/lib
-INCDIR=$(PREFIX)/include
-MANDIR=$(PREFIX)/share/man
+top_builddir=@top_builddir@
+
+prefix=@prefix@
+exec_prefix=@prefix@
+datarootdir=@datarootdir@
+
+LIBDIR=@libdir@
+INCDIR=@includedir@
+MANDIR=@mandir@
 MAN3DIR=$(MANDIR)/man3
 
 ifneq ($(OS),Windows_NT)

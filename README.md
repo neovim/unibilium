@@ -23,19 +23,33 @@ Prerequisites
   running the test suite)
 - gzip (for compressing the man pages)
 
+Configure
+---------
+
+To generate the `configure` script run:
+
+    autoreconf -fi
+
+To list the `configure` options run:
+
+    ./configure --help
+
+To generate the `Makefile` run:
+
+    ./configure --prefix=...
+
 Building
 --------
 
-There is no configure step. Compile `unibilium.c`, `uninames.c`, and
-`uniutil.c` into a library.
+Compile `unibilium.c`, `uninames.c`, and `uniutil.c` into a library.
 
-The included `Makefile` does this for you:
+The generated `Makefile` does this for you:
 
-    make PREFIX=/usr/local
+    make
 
 or
 
-    make all PREFIX=/usr/local
+    make all
 
 creates the library files, generates the man pages, and compiles the test
 suite.
@@ -84,7 +98,7 @@ Installing
 
 Run
 
-    make install PREFIX=...
+    make install
 
 to install the library, header files, man pages, and pkg-config file. Take
 care to specify the same `PREFIX`, `LIBDIR`, `INCDIR`, and `MANDIR` settings
@@ -94,7 +108,7 @@ you used for building.
 
 - `DESTDIR`: Acts as an additional prefix for the final installation step. For
   example, if you do
-  `make PREFIX=/usr && make install PREFIX=/usr DESTDIR=/tmp`, then the
+  `./configure --prefix=/usr && make && make install DESTDIR=/tmp`, then the
   library will be configured for installation under `/usr`, but the actual
   files will be copied to `/tmp/usr`. Defaults to empty.
 

@@ -22,3 +22,10 @@ Makefile
 config.log
 config.status
 libtool
+
+# Tools
+compile_commands.json
+
+# Build/deps dir
+/build/
+/.cache/clangd/

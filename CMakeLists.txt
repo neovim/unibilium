@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.10)
-project(unibilium LANGUAGES C)
+project(unibilium LANGUAGES C VERSION 2.1.2)
 
 file(GLOB SRC_FILES ${PROJECT_SOURCE_DIR}/*.c)
 add_library(unibilium ${SRC_FILES})

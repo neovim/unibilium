@@ -36,6 +36,9 @@ along with unibilium.  If not, see <http://www.gnu.org/licenses/>.
 #include <sys/stat.h>
 #include <fcntl.h>
 
+#ifndef TERMINFO
+#error "internal error: TERMINFO is not defined"
+#endif
 #ifndef TERMINFO_DIRS
 #error "internal error: TERMINFO_DIRS is not defined"
 #endif
@@ -43,6 +46,7 @@ along with unibilium.  If not, see <http://www.gnu.org/licenses/>.
 enum {MAX_BUF = 4096};
 
 const char *const unibi_terminfo_dirs = TERMINFO_DIRS;
+const char *const unibi_terminfo = TERMINFO;
 
 unibi_term *unibi_from_fp(FILE *fp) {
     char buf[MAX_BUF];
@@ -142,6 +146,10 @@ static unibi_term *from_dir(const char *dir_begin, const char *dir_end, const ch
 static unibi_term *from_dirs(const char *list, const char *term) {
     const char *a, *z;
 
+    /* bool to check if unibi_terminfo already searched.
+     * Init to 0, except if unibi_terminfo is empty */
+    int unibi_terminfo_searched = unibi_terminfo[0] == '\0';
+
     if (list[0] == '\0') {
         errno = ENOENT;
         return NULL;
@@ -149,35 +157,34 @@ static unibi_term *from_dirs(const char *list, const char *term) {
 
     a = list;
 
-    for (;;) {
-        unibi_term *ut;
-
-        while (*a == ':') {
-            ++a;
-        }
-        if (*a == '\0') {
-            break;
-        }
-
+    for(unibi_term *ut = NULL;;) {
         z = strchr(a, ':');
 
-        ut = from_dir(a, z, NULL, term);
-        if (ut) {
+        /* Empty entry can be either:
+         *  - iterator is on the delimiter, i.e. delimiter starts the list or adjacent,
+         *  - list ends with delimiter. */
+        if (a != z && *a != '\0') {
+            ut = from_dir(a, z, NULL, term);
+        } else if (!unibi_terminfo_searched) {
+            ut = from_dir(unibi_terminfo, NULL, NULL, term);
+            unibi_terminfo_searched = 1;
+        } else {
+            errno = 0;
+        }
+
+        /* Return if success or error is other than not found (ut is NULL in that case) */
+        if (ut || (errno != ENOENT && errno != EPERM && errno != EACCES)) {
             return ut;
         }
 
-        if (errno != ENOENT && errno != EPERM && errno != EACCES) {
+        /* If end of list */
+        if (!z) {
+            errno = ENOENT;
             return NULL;
         }
 
-        if (!z) {
-            break;
-        }
         a = z + 1;
     }
-
-    errno = ENOENT;
-    return NULL;
 }
 
 unibi_term *unibi_from_term(const char *term) {
@@ -211,7 +218,15 @@ unibi_term *unibi_from_term(const char *term) {
     }
 
     if ((env = getenv("TERMINFO_DIRS"))) {
-        return from_dirs(env, term);
+        ut =  from_dirs(env, term);
+
+        if (ut) {
+            return ut;
+        }
+
+        if (errno != ENOENT && errno != EPERM && errno != EACCES) {
+            return NULL;
+        }
     }
 
     return from_dirs(unibi_terminfo_dirs, term);

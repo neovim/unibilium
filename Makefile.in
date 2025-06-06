@@ -36,6 +36,11 @@ MANDIR=@mandir@
 MAN3DIR=$(MANDIR)/man3
 
 ifneq ($(OS),Windows_NT)
+  TERMINFO="$(shell ncursesw6-config --terminfo 2>/dev/null || \
+                         ncurses6-config  --terminfo 2>/dev/null || \
+                         ncursesw5-config --terminfo 2>/dev/null || \
+                         ncurses5-config  --terminfo 2>/dev/null || \
+                         echo "/usr/share/terminfo")"
   TERMINFO_DIRS="$(shell ncursesw6-config --terminfo-dirs 2>/dev/null || \
                          ncurses6-config  --terminfo-dirs 2>/dev/null || \
                          ncursesw5-config --terminfo-dirs 2>/dev/null || \
@@ -43,6 +48,7 @@ ifneq ($(OS),Windows_NT)
                          echo "/etc/terminfo:/lib/terminfo:/usr/share/terminfo:/usr/lib/terminfo:/usr/local/share/terminfo:/usr/local/lib/terminfo")"
 else
   TERMINFO_DIRS=""
+  TERMINFO=""
 endif
 
 POD2MAN=pod2man
@@ -72,7 +78,7 @@ all: $(LIBRARY) build-man build-tools build-test
 	$(LIBTOOL) --mode=compile --tag=CC $(CC) -I. -Wall -std=c99 $(CFLAGS) $(CFLAGS_DEBUG) -o $@ -c $<
 
 uniutil.lo: uniutil.c unibilium.h
-	$(LIBTOOL) --mode=compile --tag=CC $(CC) -I. -DTERMINFO_DIRS='$(TERMINFO_DIRS)' -Wall -std=c99 $(CFLAGS) $(CFLAGS_DEBUG) -o $@ -c $<
+	$(LIBTOOL) --mode=compile --tag=CC $(CC) -I. -DTERMINFO='$(TERMINFO)' -DTERMINFO_DIRS='$(TERMINFO_DIRS)' -Wall -std=c99 $(CFLAGS) $(CFLAGS_DEBUG) -o $@ -c $<
 
 $(LIBRARY): $(OBJECTS)
 	$(LIBTOOL) --mode=link --tag=CC $(CC) $(LDFLAGS) -rpath '$(LIBDIR)' -version-info $(LT_CURRENT):$(LT_REVISION):$(LT_AGE) -o $@ $^

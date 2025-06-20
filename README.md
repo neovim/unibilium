@@ -65,6 +65,13 @@ override the default behavior:
   is queried (by trying `ncursesw6-config`, `ncurses6-config`,
   `ncursesw5-config`, `ncurses5-config` in turn) and if that fails, a
   hardcoded list of likely directory names is used.
+- `TERMINFO`: A C string literal containing a directory
+  where unibilium should look for compiled terminfo files at
+  runtime (e.g. `make TERMINFO='"/usr/share/terminfo"'`). This depends on how
+  your ncurses library was configured. Defaults to `""` on Windows; everywhere
+  else the local ncurses installation is queried (by trying `ncursesw6-config`,
+  `ncurses6-config`, `ncursesw5-config`, `ncurses5-config` in turn) and if that
+  fails, a hardcoded directory name is used.
 - `PREFIX`: The target directory where files should be installed. This
   variable is only used to set the defaults for `LIBDIR`, `INCDIR`, and
   `MANDIR`, i.e. you don't need to set `PREFIX` if you set the other three

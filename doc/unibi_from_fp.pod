@@ -12,7 +12,7 @@ unibi_from_fp - read a terminfo entry from a FILE *
 
 =head1 DESCRIPTION
 
-This function reads up to 4096 bytes from I<fp>, then calls C<unibi_from_mem>.
+This function reads up to 32768 bytes from I<fp>, then calls C<unibi_from_mem>.
 
 =head1 RETURN VALUE
 

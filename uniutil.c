@@ -43,7 +43,7 @@ along with unibilium.  If not, see <http://www.gnu.org/licenses/>.
 #error "internal error: TERMINFO_DIRS is not defined"
 #endif
 
-enum {MAX_BUF = 4096};
+enum {MAX_BUF = 32768};
 
 const char *const unibi_terminfo_dirs = TERMINFO_DIRS;
 const char *const unibi_terminfo = TERMINFO;

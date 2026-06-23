@@ -49,10 +49,15 @@ const char *const unibi_terminfo_dirs = TERMINFO_DIRS;
 const char *const unibi_terminfo = TERMINFO;
 
 unibi_term *unibi_from_fp(FILE *fp) {
-    char buf[MAX_BUF];
+    char *buf = NULL;
+    unibi_term *term = NULL;
     size_t n, r;
 
-    for (n = 0; n < sizeof buf && (r = fread(buf + n, 1, sizeof buf - n, fp)) > 0; ) {
+    if (!(buf = malloc(MAX_BUF))) {
+        return term;
+    }
+
+    for (n = 0; n < MAX_BUF && (r = fread(buf + n, 1, MAX_BUF - n, fp)) > 0; ) {
         n += r;
 
         if (feof(fp)) {
@@ -60,27 +65,34 @@ unibi_term *unibi_from_fp(FILE *fp) {
         }
     }
 
-    if (ferror(fp)) {
-        return NULL;
+    if (!ferror(fp)) {
+        term = unibi_from_mem(buf, n);
     }
 
-    return unibi_from_mem(buf, n);
+    free(buf);
+    return term;
 }
 
 unibi_term *unibi_from_fd(int fd) {
-    char buf[MAX_BUF];
+    char *buf = NULL;
+    unibi_term *term = NULL;
     size_t n;
     ssize_t r;
 
-    for (n = 0; n < sizeof buf && (r = read(fd, buf + n, sizeof buf - n)) > 0; ) {
+    if (!(buf = malloc(MAX_BUF))) {
+        return term;
+    }
+
+    for (n = 0; n < MAX_BUF && (r = read(fd, buf + n, MAX_BUF - n)) > 0; ) {
         n += r;
     }
 
-    if (r < 0) {
-        return NULL;
+    if (r >= 0) {
+        term = unibi_from_mem(buf, n);
     }
 
-    return unibi_from_mem(buf, n);
+    free(buf);
+    return term;
 }
 
 unibi_term *unibi_from_file(const char *file) {

@@ -1,0 +1,34 @@
+name: test
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
+jobs:
+  # Test the minimum supported cmake.
+  linux:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v7.0.0
+        with:
+          persist-credentials: false
+
+      - name: Install dependencies
+        run: sudo apt --update install build-essential libtool-bin libncurses-dev autoconf
+
+      - name: Build
+        run: |
+          autoreconf -fi
+          ./configure
+          make all
+
+      - name: Run tests
+        run: make test

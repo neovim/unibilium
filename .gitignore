@@ -9,6 +9,8 @@ tools/*
 /.maint
 /tags
 
+!CMakeLists.txt
+
 # autoreconf
 aclocal.m4
 autom4te.cache/

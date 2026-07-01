@@ -1,8 +1,11 @@
 cmake_minimum_required(VERSION 3.10)
 project(unibilium LANGUAGES C VERSION 2.1.3)
 
-file(GLOB SRC_FILES ${PROJECT_SOURCE_DIR}/*.c)
-add_library(unibilium ${SRC_FILES})
+add_library(unibilium
+  unibilium.c
+  uninames.c
+  uniutil.c
+)
 set_target_properties(unibilium PROPERTIES
   PUBLIC_HEADER ${PROJECT_SOURCE_DIR}/unibilium.h
   # Keep in sync with Makefile.in

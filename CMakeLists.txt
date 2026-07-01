@@ -15,11 +15,23 @@ if(NOT WIN32)
     OUTPUT_VARIABLE TERMINFO_DIRS_DEFAULT)
   # Remove trailing newline
   string(STRIP "${TERMINFO_DIRS_DEFAULT}" TERMINFO_DIRS_DEFAULT)
+
+  execute_process(COMMAND sh -c "ncursesw6-config --terminfo 2>/dev/null || \
+      ncurses6-config  --terminfo 2>/dev/null || \
+      ncursesw5-config --terminfo 2>/dev/null || \
+      ncurses5-config  --terminfo 2>/dev/null || \
+      echo '/usr/share/terminfo'"
+    OUTPUT_VARIABLE TERMINFO_DEFAULT)
+  # Remove trailing newline
+  string(STRIP "${TERMINFO_DEFAULT}" TERMINFO_DEFAULT)
 else()
   set(TERMINFO_DIRS_DEFAULT "")
+  set(TERMINFO_DEFAULT "")
 endif()
 set(TERMINFO_DIRS "${TERMINFO_DIRS_DEFAULT}" CACHE STRING "Colon-separated list of directories where unibilium should look for compiled terminfo files at runtime")
 target_compile_definitions(unibilium PUBLIC "TERMINFO_DIRS=\"${TERMINFO_DIRS}\"")
+set(TERMINFO "${TERMINFO_DEFAULT}" CACHE STRING "Directory where unibilium should look for compiled terminfo files at runtime")
+target_compile_definitions(unibilium PUBLIC "TERMINFO=\"${TERMINFO}\"")
 
 include(GNUInstallDirs)
 install(TARGETS unibilium

@@ -3,8 +3,13 @@ project(unibilium LANGUAGES C VERSION 2.1.3)
 
 file(GLOB SRC_FILES ${PROJECT_SOURCE_DIR}/*.c)
 add_library(unibilium ${SRC_FILES})
-set_target_properties(unibilium PROPERTIES PUBLIC_HEADER ${PROJECT_SOURCE_DIR}/unibilium.h
-  VERSION "${VERSION_MAJOR}.${VERSION_MINOR}")
+set_target_properties(unibilium PROPERTIES
+  PUBLIC_HEADER ${PROJECT_SOURCE_DIR}/unibilium.h
+  # Keep in sync with Makefile.in
+  # "$LT_CURRENT - $LT_AGE.$LT_AGE.$LT_REVISION"
+  VERSION "4.0.1"
+  # "$LT_CURRENT - $LT_AGE"
+  SOVERSION "4")
 
 if(NOT WIN32)
   execute_process(COMMAND sh -c "ncursesw6-config --terminfo-dirs 2>/dev/null || \

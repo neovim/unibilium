@@ -41,9 +41,13 @@ target_compile_definitions(unibilium PUBLIC "TERMINFO_DIRS=\"${TERMINFO_DIRS}\""
 set(TERMINFO "${TERMINFO_DEFAULT}" CACHE STRING "Directory where unibilium should look for compiled terminfo files at runtime")
 target_compile_definitions(unibilium PUBLIC "TERMINFO=\"${TERMINFO}\"")
 
+include(GNUInstallDirs)
+
+if(NOT WIN32)
+  add_subdirectory(doc)
+endif()
 add_subdirectory(tools)
 
-include(GNUInstallDirs)
 install(TARGETS unibilium
   PUBLIC_HEADER
   ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}

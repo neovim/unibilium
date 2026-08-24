@@ -1,3 +1,7 @@
+2.1.3   2026-08-24
+        - Support terminfo files larger than 4K (#33)
+        - Align terminfo search logic with ncurses (#31)
+
 2.1.2   2024-07-11
         - Add build and deps directories to gitignore
         - build(cmake): allow user to set `TERMINFO_DIRS` (#25)

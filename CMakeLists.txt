@@ -49,6 +49,9 @@ if(NOT WIN32)
 endif()
 add_subdirectory(tools)
 
+enable_testing()
+add_subdirectory(t)
+
 install(TARGETS unibilium
   PUBLIC_HEADER
   ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}

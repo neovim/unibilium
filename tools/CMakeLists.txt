@@ -2,6 +2,7 @@ macro(unibi_tool basename)
   add_executable(${basename} "${basename}.c")
   target_link_libraries(${basename} unibilium)
   target_include_directories(${basename} PRIVATE ${PROJECT_SOURCE_DIR})
+  target_compile_features(${basename} PRIVATE c_std_99)
 endmacro()
 
 unibi_tool(unibi-dump)

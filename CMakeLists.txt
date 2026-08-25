@@ -13,6 +13,7 @@ set_target_properties(unibilium PROPERTIES
   VERSION "4.0.1"
   # "$LT_CURRENT - $LT_AGE"
   SOVERSION "4")
+target_compile_features(unibilium PRIVATE c_std_99)
 
 if(NOT WIN32)
   execute_process(COMMAND sh -c "ncursesw6-config --terminfo-dirs 2>/dev/null || \

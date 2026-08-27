@@ -141,7 +141,8 @@ STATIC_TEST_FILES:= \
   t/static_screen-256color.c \
   t/static_screen.c \
   t/static_tmux.c \
-  t/static_xterm-256color.c
+  t/static_xterm-256color.c \
+  t/static_xterm.c
 .PHONY: regenerate-tests
 regenerate-tests:
 	$(RM) $(STATIC_TEST_FILES)

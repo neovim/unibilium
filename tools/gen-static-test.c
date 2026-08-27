@@ -49,6 +49,7 @@ static void print_str_esc(const char *s, int twice) {
     }
 }
 
+enum {MAX_BUF = 32768};
 int main(int argc, char **argv) {
     unibi_term *ut;
     if (argc < 2) {
@@ -68,10 +69,15 @@ int main(int argc, char **argv) {
         return EXIT_FAILURE;
     }
 
-    char buf[4096];
-    size_t r = unibi_dump(ut, buf, sizeof buf);
-    if (r > sizeof buf) {
+    char *buf = malloc(MAX_BUF);
+    if (!buf) {
+        perror("malloc()");
+        return EXIT_FAILURE;
+    }
+    size_t r = unibi_dump(ut, buf, MAX_BUF);
+    if (r > MAX_BUF) {
         perror("unibi_dump()");
+        free(buf);
         return EXIT_FAILURE;
     }
 
@@ -324,6 +330,7 @@ int main(int argc, char **argv) {
     say("}");
 
     unibi_destroy(ut);
+    free(buf);
 
     say("");
     say("static void setup(void) {");

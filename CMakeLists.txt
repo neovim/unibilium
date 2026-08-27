@@ -46,6 +46,15 @@ include(GNUInstallDirs)
 
 if(NOT WIN32)
   add_subdirectory(doc)
+  set(LIBDIR ${CMAKE_INSTALL_FULL_LIBDIR})
+  set(INCDIR ${CMAKE_INSTALL_FULL_INCLUDEDIR})
+  set(VERSION ${PROJECT_VERSION})
+  configure_file(unibilium.pc.in unibilium.pc @ONLY)
+  install(FILES "${CMAKE_CURRENT_BINARY_DIR}/unibilium.pc"
+    DESTINATION "${CMAKE_INSTALL_LIBDIR}/pkgconfig")
+  unset(LIBDIR)
+  unset(INCDIR)
+  unset(VERSION)
 endif()
 add_subdirectory(tools)
 

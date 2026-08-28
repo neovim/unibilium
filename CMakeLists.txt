@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.10)
-project(unibilium LANGUAGES C VERSION 2.1.3)
+project(unibilium LANGUAGES C VERSION 2.1.4)
 
 option(BUILD_MAN_PAGES "Build man pages" ON)
 option(BUILD_TESTS "Build tests" ON)
@@ -14,7 +14,7 @@ set_target_properties(unibilium PROPERTIES
   PUBLIC_HEADER ${PROJECT_SOURCE_DIR}/unibilium.h
   # Keep in sync with Makefile.in
   # "$LT_CURRENT - $LT_AGE.$LT_AGE.$LT_REVISION"
-  VERSION "4.0.1"
+  VERSION "4.0.2"
   # "$LT_CURRENT - $LT_AGE"
   SOVERSION "4")
 target_compile_features(unibilium PRIVATE c_std_99)

@@ -1,6 +1,6 @@
 m4_define([MAJOR], [2])
 m4_define([MINOR], [1])
-m4_define([PATCH], [3])
+m4_define([PATCH], [4])
 
 AC_INIT([unibilium], [MAJOR.MINOR.PATCH])
 AC_CONFIG_FILES([Makefile])

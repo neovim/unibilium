@@ -1,4 +1,8 @@
-2.1.3   2026-08-24
+2.1.4   2026-08-30
+        - Add minimal Zig build scripts (compile and install lib)
+        - Fix and extend CMake build scripts
+
+2.1.3   2026-08-24 (unreleased)
         - Support terminfo files larger than 4K (#33)
         - Align terminfo search logic with ncurses (#31)
 

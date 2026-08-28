@@ -1,0 +1,15 @@
+.{
+    .name = .unibilium,
+    .fingerprint = 0x1d1baa4896ad720,
+    .version = "2.1.3",
+    .paths = .{
+        "build.zig",
+        "build.zig.zon",
+        "unibilium.h",
+        "unibilium.c",
+        "uninames.c",
+        "uniutil.c",
+        "README.md",
+        "LICENSE",
+    },
+}

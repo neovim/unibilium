@@ -1,6 +1,10 @@
 cmake_minimum_required(VERSION 3.10)
 project(unibilium LANGUAGES C VERSION 2.1.3)
 
+option(BUILD_MAN_PAGES "Build man pages" ON)
+option(BUILD_TESTS "Build tests" ON)
+option(BUILD_TOOLS "Build unibilium tools" ON)
+
 add_library(unibilium
   unibilium.c
   uninames.c
@@ -45,7 +49,9 @@ target_compile_definitions(unibilium PUBLIC "TERMINFO=\"${TERMINFO}\"")
 include(GNUInstallDirs)
 
 if(NOT WIN32)
-  add_subdirectory(doc)
+  if(BUILD_MAN_PAGES)
+    add_subdirectory(doc)
+  endif()
   set(LIBDIR ${CMAKE_INSTALL_FULL_LIBDIR})
   set(INCDIR ${CMAKE_INSTALL_FULL_INCLUDEDIR})
   set(VERSION ${PROJECT_VERSION})
@@ -56,10 +62,15 @@ if(NOT WIN32)
   unset(INCDIR)
   unset(VERSION)
 endif()
-add_subdirectory(tools)
 
-enable_testing()
-add_subdirectory(t)
+if(BUILD_TOOLS)
+  add_subdirectory(tools)
+endif()
+
+if(BUILD_TESTS)
+  enable_testing()
+  add_subdirectory(t)
+endif()
 
 install(TARGETS unibilium
   PUBLIC_HEADER
